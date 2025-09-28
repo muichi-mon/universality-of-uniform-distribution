@@ -1,0 +1,93 @@
+---
+title: "Universality of Uniform Distribution"
+author: "Rajveer"
+date: "2025-09-28"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+# Set global chunk options
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+set.seed(123)  # for reproducibility
+```
+
+## 1. Simulate Uniform Random Numbers
+
+We first generate uniform random numbers on $[0,1]$.
+
+```{r uniform-simulation}
+# Number of samples
+n <- 10000
+
+# Generate uniform random numbers on [0,1]
+U <- runif(n)
+head(U)
+```
+
+---
+
+## 2. Transform Uniform to Other Distributions
+
+### a) Exponential Distribution
+
+If $X \sim \text{Exponential}(\lambda)$, the CDF is:
+
+$$
+F(x) = 1 - e^{-\lambda x}, \quad x \ge 0
+$$
+
+The inverse CDF is:
+
+$$
+F^{-1}(u) = -\frac{\log(1-u)}{\lambda}
+$$
+
+We can transform uniform samples to exponential samples:
+
+```{r exponential-transformation}
+lambda <- 2
+X_exp <- -log(1 - U) / lambda
+head(X_exp)
+```
+
+---
+
+### b) Normal Distribution
+
+For a standard normal distribution $X \sim N(0,1)$, we can use the built-in `qnorm()` function (inverse CDF):
+
+```{r normal-transformation}
+X_norm <- qnorm(U)
+head(X_norm)
+```
+
+---
+
+### c) Any Other Distribution
+
+For any distribution with CDF $F$, apply its inverse CDF.
+
+**Example: Uniform distribution on \[a,b]:**
+
+```{r uniform-a-b}
+a <- 5
+b <- 10
+X_uniform <- a + (b - a) * U
+head(X_uniform)
+```
+
+---
+
+## 3. Visualize the Distributions
+
+```{r plots, fig.width=8, fig.height=6}
+par(mfrow=c(2,2))
+hist(U, breaks=30, main="Uniform [0,1]", col="lightblue", xlab="U")
+hist(X_exp, breaks=30, main="Exponential", col="lightgreen", xlab="X_exp")
+hist(X_norm, breaks=30, main="Normal", col="lightpink", xlab="X_norm")
+hist(X_uniform, breaks=30, main="Uniform [5,10]", col="lightyellow", xlab="X_uniform")
+```
+
+---
+
+This demonstrates how **one set of uniform random numbers can be transformed into many different distributions** using the **inverse CDF method**.
