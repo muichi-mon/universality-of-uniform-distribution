@@ -89,10 +89,11 @@ hist(X_norm, breaks=30, main="Normal", col="lightpink", xlab="X_norm")
 hist(X_uniform, breaks=30, main="Uniform [5,10]", col="lightyellow", xlab="X_uniform")
 ```
 
-![](universality_of_uniform_distribution_files/figure-gfm/plots-1.png)<!-- -->
+![](plots-1.png)<!-- -->
 
 ------------------------------------------------------------------------
 
 This demonstrates how **one set of uniform random numbers can be
 transformed into many different distributions** using the **inverse CDF
 method**.
+
